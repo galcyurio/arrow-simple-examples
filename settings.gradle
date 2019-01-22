@@ -1,2 +1,4 @@
 rootProject.name = 'arrow-simple-examples'
 
+include 'dependency-injection'
+
