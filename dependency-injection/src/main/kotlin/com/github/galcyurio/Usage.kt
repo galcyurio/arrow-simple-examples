@@ -18,3 +18,8 @@ class MyActivity {
         runBlocking { myViewModel.run { 1.fetchUser() } }
     }
 }
+
+fun main() {
+    runBlocking { requestOperations.run { 1.fetchUser() } }
+        .also { println(it) }
+}
