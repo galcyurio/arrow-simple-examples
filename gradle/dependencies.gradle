@@ -1,7 +1,7 @@
 ext {
     versions = [
             kotlin: '1.3.20',
-            arrow : '0.8.2',
+            arrow : '0.9.0',
     ]
 
     deps = [
@@ -9,8 +9,6 @@ ext {
                     stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
             ],
             arrow : [
-                    core                              : "io.arrow-kt:arrow-core:$versions.arrow",
-                    coreInstances                     : "io.arrow-kt:arrow-instances-core:$versions.arrow",
                     coreData                          : "io.arrow-kt:arrow-core-data:$versions.arrow",
                     coreExtensions                    : "io.arrow-kt:arrow-core-extensions:$versions.arrow",
                     data                              : "io.arrow-kt:arrow-data:$versions.arrow",
@@ -23,7 +21,7 @@ ext {
                     free                              : "io.arrow-kt:arrow-free:$versions.arrow",
                     freeExtensions                    : "io.arrow-kt:arrow-free-extensions:$versions.arrow",
                     mtl                               : "io.arrow-kt:arrow-mtl:$versions.arrow",
-                    effects                           : "io.arrow-kt:arrow-effects:$versions.arrow",
+                    effects                           : "io.arrow-kt:arrow-effects-data:$versions.arrow",
                     effectsExtensions                 : "io.arrow-kt:arrow-effects-extensions:$versions.arrow",
                     effectsRx2                        : "io.arrow-kt:arrow-effects-rx2:$versions.arrow",
                     effectsRx2Extensions              : "io.arrow-kt:arrow-effects-rx2-extensions:$versions.arrow",
