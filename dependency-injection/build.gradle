@@ -4,4 +4,5 @@ dependencies {
     compile deps.arrow.core, deps.arrow.coreInstances
     compile deps.arrow.effects
     compile deps.arrow.effectsKotlinxCoroutines, deps.arrow.effectsKotlinxCoroutinesInstances
+    compile deps.arrow.data
 }

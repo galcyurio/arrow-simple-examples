@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":dependency-injection:test" external.linked.project.path="$MODULE_DIR$/../../../dependency-injection" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="arrow-simple-examples" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="kotlin-language" name="Kotlin">
+      <configuration version="3" platform="JVM 1.8" useProjectSettings="false">
+        <compilerSettings />
+        <compilerArguments>
+          <option name="destination" value="$MODULE_DIR$/../../../dependency-injection/build/classes/kotlin/test" />
+          <option name="classpath" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.20/b1f3cb184c4ce4139741454df2f8fca5320f822d/kotlin-stdlib-jdk8-1.3.20.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.arrow-kt/arrow-instances-core/0.8.2/ed4d2e2d4682d9e96f769bed4214ea1d1823e3e7/arrow-instances-core-0.8.2.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.arrow-kt/arrow-effects-kotlinx-coroutines-instances/0.8.2/450f58c0e6b7a0b04b618c987f62a86c9067136f/arrow-effects-kotlinx-coroutines-instances-0.8.2.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.arrow-kt/arrow-effects-kotlinx-coroutines/0.8.2/4bdb5fd541cd32dbefbf7a384fee2df4ab62beff/arrow-effects-kotlinx-coroutines-0.8.2.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.arrow-kt/arrow-effects/0.8.2/8689c225dba687fa16f7a35247e4d51f3bdf733/arrow-effects-0.8.2.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.arrow-kt/arrow-data/0.8.2/94b3ff271dc97566febce82dd18b5d2e5f0a757d/arrow-data-0.8.2.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.arrow-kt/arrow-typeclasses/0.8.2/8d964775c39d09a9807c77a9ebbafd4542a5fddf/arrow-typeclasses-0.8.2.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.arrow-kt/arrow-core/0.8.2/15c1949942a7081557d737644a3b182043a1b180/arrow-core-0.8.2.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.20/aa17d6fd473ce53061a7b2b9d2ae96f547cae93d/kotlin-stdlib-jdk7-1.3.20.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.arrow-kt/arrow-annotations/0.8.2/8b4178e25f04348747a25305df2afd80ee2b2254/arrow-annotations-0.8.2.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.1.0/20274ba816d8938fdb4d7a3806719691db60fa1e/kotlinx-coroutines-core-1.1.0.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.20/eb2a232734e09fcd1b958a5c7520a93c6de38b32/kotlin-stdlib-1.3.20.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-common/1.1.0/d81cc72afd6e49f5270db24bae935f9bfcfd859e/kotlinx-coroutines-core-common-1.1.0.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.20/7d7934e26ce34da1a0a8d00e38038d7cf3375e89/kotlin-stdlib-common-1.3.20.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar;C:/Users/admin/.gradle/caches/modules-2/files-2.1/io.kindedj/kindedj/1.1.0/462731347602a3f24e3f21feec50928f9a657741/kindedj-1.1.0.jar" />
+          <option name="noStdlib" value="true" />
+          <option name="noReflect" value="true" />
+          <option name="moduleName" value="dependency-injection" />
+          <option name="jvmTarget" value="1.8" />
+          <option name="friendPaths">
+            <array>
+              <option value="$MODULE_DIR$/../../../dependency-injection/build/classes/kotlin/main" />
+              <option value="$MODULE_DIR$/../../../dependency-injection/build/classes/java/main" />
+            </array>
+          </option>
+          <option name="languageVersion" value="1.3" />
+          <option name="apiVersion" value="1.3" />
+          <option name="pluginOptions">
+            <array />
+          </option>
+          <option name="pluginClasspaths">
+            <array />
+          </option>
+          <option name="errors">
+            <ArgumentParseErrors />
+          </option>
+        </compilerArguments>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
+    <output-test url="file://$MODULE_DIR$/../../../dependency-injection/build/classes/java/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../dependency-injection/src/test" />
+    <orderEntry type="jdk" jdkName="10" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="arrow-simple-examples.dependency-injection.main" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.20" level="project" />
+    <orderEntry type="library" name="Gradle: io.arrow-kt:arrow-instances-core:0.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: io.arrow-kt:arrow-effects-kotlinx-coroutines-instances:0.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: io.arrow-kt:arrow-effects-kotlinx-coroutines:0.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: io.arrow-kt:arrow-effects:0.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: io.arrow-kt:arrow-data:0.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: io.arrow-kt:arrow-typeclasses:0.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: io.arrow-kt:arrow-core:0.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.20" level="project" />
+    <orderEntry type="library" name="Gradle: io.arrow-kt:arrow-annotations:0.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.20" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.20" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kindedj:kindedj:1.1.0" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="arrow-simple-examples.dependency-injection.main" />
+</module>
