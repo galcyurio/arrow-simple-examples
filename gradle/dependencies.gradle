@@ -2,6 +2,9 @@ ext {
     versions = [
             kotlin: '1.3.50',
             arrow : '0.10.0',
+
+            /* Test */
+            junit : '4.12',
     ]
 
     deps = [
@@ -9,15 +12,14 @@ ext {
                     stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
             ],
             arrow : [
-                    core            : "io.arrow-kt:arrow-core:$versions.arrow",
-                    coreData        : "io.arrow-kt:arrow-core-data:$versions.arrow",
-                    coreExtensions  : "io.arrow-kt:arrow-core-extensions:$versions.arrow",
-                    syntax          : "io.arrow-kt:arrow-syntax:$versions.arrow",
-                    typeclasses     : "io.arrow-kt:arrow-typeclasses:$versions.arrow",
-                    extras          : "io.arrow-kt:arrow-extras:$versions.arrow",
-                    extrasExtensions: "io.arrow-kt:arrow-extras-extensions:$versions.arrow",
-                    meta            : "io.arrow-kt:arrow-meta:$versions.arrow",
-                    fx              : "io.arrow-kt:arrow-fx:$versions.arrow",
-            ]
+                    core  : "io.arrow-kt:arrow-core:$versions.arrow",
+                    syntax: "io.arrow-kt:arrow-syntax:$versions.arrow",
+                    meta  : "io.arrow-kt:arrow-meta:$versions.arrow",
+                    optics: "io.arrow-kt:arrow-optics:$versions.arrow",
+                    fx    : "io.arrow-kt:arrow-fx:$versions.arrow",
+            ],
+
+            /* Test */
+            junit : "junit:junit:$versions.junit",
     ]
 }
