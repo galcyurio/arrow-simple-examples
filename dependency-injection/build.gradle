@@ -1,7 +1,7 @@
 dependencies {
     compile deps.kotlin.stdlib
 
-    compile deps.arrow.coreData, deps.arrow.coreExtensions
+    compile deps.arrow.core
     compile deps.arrow.effectsData
     compile deps.arrow.effectsKotlinxCoroutinesData, deps.arrow.effectsKotlinxCoroutinesExtensions
     compile deps.arrow.data
