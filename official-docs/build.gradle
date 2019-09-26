@@ -1,3 +1,9 @@
 dependencies {
     implementation deps.kotlin.stdlib
+
+    implementation deps.arrow.core
+    implementation deps.arrow.syntax
+    implementation deps.arrow.optics
+
+    testImplementation deps.junit
 }
