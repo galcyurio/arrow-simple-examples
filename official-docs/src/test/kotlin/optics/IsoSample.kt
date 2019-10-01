@@ -1,10 +1,13 @@
 package optics
 
-import arrow.core.Try
-import arrow.core.Tuple2
+import arrow.core.*
 import arrow.core.extensions.`try`.functor.functor
-import arrow.core.toT
+import arrow.core.extensions.either.functor.functor
 import arrow.optics.Iso
+import arrow.optics.PIso
+import arrow.optics.optics
+import arrow.optics.toNullable
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 
@@ -74,9 +77,125 @@ class IsoSample {
     /** Functor 매핑으로 동일한 작업을 수행할 수 있습니다. */
     @Test
     fun iso4() {
-        val point = Point2D(1, 2)
+        val point = Point2D(5, 10)
         pointIsoTuple.modifyF(Try.functor(), point) { tuple ->
             Try { tuple.a / 2 toT (tuple.b / 2) }
-        }
+        }.also { println(it) }
+
+        // ===== Try 대신 Either 사용 =====
+        pointIsoTuple.modifyF(Either.functor(), point) { tuple ->
+            runBlocking {
+                Either.catch { tuple.a / 2 toT (tuple.b / 2) }
+            }
+        }.also { println(it) }
     }
+//    Success(value=Point2D(x=2, y=5))
+//    Right(b=Point2D(x=2, y=5))
+
+    @Test
+    fun iso5() {
+        val point = Point2D(5, 10)
+        val liftF = pointIsoTuple.liftF(Try.functor()) { tuple ->
+            Try { (tuple.a / 2) toT (tuple.b / 0) }
+        }
+        liftF(point).also { println(it) }
+
+        // ===== Try 대신 Either 사용 =====
+        val liftF2 = pointIsoTuple.liftF(Either.functor()) { tuple ->
+            runBlocking {
+                Either.catch { (tuple.a / 2) toT (tuple.b / 0) }
+            }
+        }
+        liftF2(point).also { println(it) }
+    }
+//    Failure(exception=java.lang.ArithmeticException: / by zero)
+//    Left(a=java.lang.ArithmeticException: / by zero)
+
+    /**
+     * ## Composition (구성)
+     *
+     * [Iso]들을 구성함으로써 새로운 추가적인 [Iso]를 정의하지 않고 생성할 수 있습니다.
+     * 서로 다른 `API`들과 프레임워크들을 다룰 때 우리는 종종
+     * [Point2D], [Tuple2], [Pair] [Coord] 등과 같은 여러 개의 동일하지만
+     * 다른 구조를 가진 것들을 사용합니다.
+     */
+    fun dummy1() {}
+
+    data class Coord(val xAxis: Int, val yAxis: Int)
+
+    val pairIsoCoord: Iso<Pair<Int, Int>, Coord> = Iso(
+        get = { pair -> Coord(pair.first, pair.second) },
+        reverseGet = { coord -> coord.xAxis to coord.yAxis }
+    )
+    val tupleIsoPair: Iso<Tuple2<Int, Int>, Pair<Int, Int>> = Iso(
+        get = { tuple -> tuple.a to tuple.b },
+        reverseGet = { pair -> pair.first toT pair.second }
+    )
+
+    /**
+     * [pointIsoTuple], [pairIsoCoord] 그리고 [tupleIsoPair]를 구성함으로써
+     * 우리는 [Point2D], [Tuple2], [Pair] 그리고 [Coord]를 서로 바꿔 사용할 수 있습니다.
+     *
+     * [Iso]와 함수들을 구성하면 함수의 입력 또는 출력 유형을 변경하는데 유용합니다.
+     * `Iso<A?, Option<A>>`는 arrow-optics 에서 `nullableToOption()`으로 사용할 수 있습니다.
+     */
+    @Test
+    fun iso6() {
+        val unknownCode: (String) -> String? = { value ->
+            "unknown $value"
+        }
+        val nullableOptionIso = Option.toNullable<String>()
+        val func = unknownCode andThen nullableOptionIso::reverseGet
+        func("Retrieve an Option").also { println(it) }
+    }
+
+    /**
+     * [Iso]는 모든 `optics`와 구성할 수 있으며 다음과 같은 `optics`로 구성됩니다.
+     *
+     * ```
+     * |     | Iso | Lens | Prism | Optional | Getter | Setter | Fold | Traversal |
+     * |-----|-----|------|-------|----------|--------|--------|------|-----------|
+     * | Iso | Iso | Lens | Prism | Optional | Getter | Setter | Fold | Traversal |
+     * ```
+     */
+    fun dummy2() {}
+
+    /**
+     * ## [Iso] 만들기
+     *
+     * boilerplate 코드를 피하려면 `@optics` 어노테이션을 사용해서 데이터 클래스와
+     * 2~10개의 매개변수를 가진 `TupleN`의 [Iso]를 생성할 수 있습니다.
+     * [Iso]는 `companion object`의 확장 변수 `val T.Companion.iso`를 통해서 생성될 수 있습니다.
+     */
+    fun dummy3() {}
+
+    // Pos 클래스는 main sourceSet 에 있음
+    val posIso = Pos.iso
+
+    /**
+     * Polymorphic isos
+     *
+     * 다형성과 같은 구조를 처리할 때 [PIso]의 focus 유형(결과적으로 생성된 유형 A)을
+     * 변경할 수 있는 다형성 [Iso]를 만들 수 있습니다.
+     *
+     * 우리에게 `Tuple2<A, B>`와 `Pair<A, B>` 있으면
+     * `get: (Tuple2<A, B>) -> Pair<A, B>`와 `reverseGet: (Tuple2<C, D>) -> Pair<C, D>`를 가지는
+     * 다형성 [PIso]를 생성할 수 있습니다.
+     */
+    fun <A, B, C, D> tuple2(): PIso<Tuple2<A, B>, Pair<C, D>, Pair<A, B>, Tuple2<C, D>> = PIso(
+        get = { tuple -> tuple.a to tuple.b },
+        reverseGet = { tuple -> tuple.a to tuple.b }
+    )
+
+    /**
+     * Above defined [PIso] can lift a `reverse` function of `(Pair<A, B>) -> Tuple2<B, A>` to a function `(Tuple2<A, B>) -> Pair<B, A>`.
+     */
+    @Test
+    fun iso7() {
+        val reverseTupleAsPair: (Tuple2<Int, String>) -> Pair<String, Int> =
+            tuple2<Int, String, String, Int>().lift { it.second toT it.first }
+        val reverse: Pair<String, Int> = reverseTupleAsPair(5 toT "five")
+        println(reverse)
+    }
+//    (five, 5)
 }
