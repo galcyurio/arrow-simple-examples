@@ -5,6 +5,7 @@ dependencies {
     implementation deps.arrow.syntax
     implementation deps.arrow.optics
     implementation deps.arrow.fx
+    implementation deps.coroutines
 
     testImplementation deps.junit
 }
