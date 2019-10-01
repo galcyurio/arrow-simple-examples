@@ -1,9 +1,12 @@
+apply plugin: 'kotlin-kapt'
+
 dependencies {
     implementation deps.kotlin.stdlib
 
     implementation deps.arrow.core
     implementation deps.arrow.syntax
     implementation deps.arrow.optics
+    kapt deps.arrow.meta
     implementation deps.arrow.fx
     implementation deps.coroutines
 
