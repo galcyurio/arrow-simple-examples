@@ -1,6 +1,7 @@
 package optics
 
 import arrow.core.ListK
+import arrow.core.MapK
 import arrow.optics.optics
 
 @optics
@@ -49,3 +50,8 @@ data class HttpError(val message: String) : NetworkError() {
 }
 
 object TimeoutError : NetworkError()
+
+@optics
+data class Db(val content: MapK<Int, String>) {
+    companion object
+}
