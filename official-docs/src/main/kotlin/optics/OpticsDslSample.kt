@@ -1,5 +1,6 @@
 package optics
 
+import arrow.core.ListK
 import arrow.optics.optics
 
 @optics
@@ -22,6 +23,10 @@ data class Employee(val name: String, val company: Company?) {
     companion object
 }
 
+@optics
+data class Employees(val employees: ListK<Employee>) {
+    companion object
+}
 
 @optics
 sealed class NetworkResult {

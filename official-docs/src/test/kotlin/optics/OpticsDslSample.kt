@@ -1,5 +1,10 @@
 package optics
 
+import arrow.core.ListK
+import arrow.core.k
+import arrow.optics.dsl.every
+import arrow.optics.extensions.listk.each.each
+import arrow.optics.typeclasses.Each
 import org.junit.Test
 
 /**
@@ -47,4 +52,21 @@ class OpticsDslSample {
     }
 //    HttpError(message=BOOM!)
 //    HttpError(message=BOOM!)
+
+    /**
+     * ## Each
+     *
+     * [Each] 구조 `S`에 집중하고 모든 초점(foci) `A`를 보는데 사용될 수 있습니다.
+     * 다음 예제에서는 `Employees` 안에 있는 `Employee`에 초점을 둡니다.
+     */
+    @Test
+    fun opticsDsl3() {
+        val john = Employee("John Doe", Company("Kategory", Address("Functional city", Street(42, "lambda street"))))
+        val jane = Employee("Jane Doe", Company("Kategory", Address("Functional city", Street(42, "lambda street"))))
+        val employees = Employees(listOf(john, jane).k())
+        Employees.employees.every(ListK.each()).company.address.street.name.modify(employees, String::capitalize)
+                .also { println(it) }
+    }
+//    Employees(employees=ListK(list=[Employee(name=John Doe, company=Company(name=Kategory, address=Address(city=Functional city, street=Street(number=42, name=Lambda street)))), Employee(name=Jane Doe, company=Company(name=Kategory, address=Address(city=Functional city, street=Street(number=42, name=Lambda street))))]))
+
 }
