@@ -1,7 +1,12 @@
-dependencies {
-    compile deps.kotlin.stdlib
+def arrowVersion = '0.8.2'
 
-    compile deps.arrow.core, deps.arrow.coreInstances
-    compile deps.arrow.effects
-    compile deps.arrow.effectsKotlinxCoroutines, deps.arrow.effectsKotlinxCoroutinesInstances
+dependencies {
+    implementation deps.kotlin.stdlib
+
+    implementation "io.arrow-kt:arrow-core:$arrowVersion"
+    implementation "io.arrow-kt:arrow-instances-core:$arrowVersion"
+    implementation "io.arrow-kt:arrow-effects:$arrowVersion"
+    implementation "io.arrow-kt:arrow-effects-kotlinx-coroutines:$arrowVersion"
+    implementation "io.arrow-kt:arrow-effects-kotlinx-coroutines-instances:$arrowVersion"
+    implementation "io.arrow-kt:arrow-data:$arrowVersion"
 }

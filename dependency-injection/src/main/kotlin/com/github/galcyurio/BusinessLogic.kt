@@ -13,17 +13,8 @@ interface RequestOperations : DaoOperations, NetworkOperations, DomainMapper {
             .recoverWith { requestUser().toUserFromNetwork() }
 }
 
-interface RequestOperationsSync<F>
-    : DaoOperationsSync<F>, NetworkOperationsSync<F>, DomainMapperSync<F> {
+interface RequestOperationsSync<F> : DaoOperationsSync<F>, NetworkOperationsSync<F>, DomainMapperSync<F> {
     fun Index.fetchUser(): Kind<F, User> =
         queryUser().toUserFromDatabase()
             .handleErrorWith { requestUser().toUserFromNetwork() }
-}
-
-interface RequestOperationsLazy<F>
-    : DaoOperationsSync<F>, NetworkOperationsSync<F>, DomainMapperSync<F>, MonadDefer<F> {
-    fun Index.fetchUser(): Kind<F, User> = defer {
-        queryUser().toUserFromDatabase()
-            .handleErrorWith { requestUser().toUserFromNetwork() }
-    }
 }

@@ -18,8 +18,8 @@ interface DomainMapper {
 
 interface DomainMapperSync<F> : MonadError<F, Throwable> {
     fun Kind<F, UserDto>.toUserFromNetwork(): Kind<F, User> =
-        flatMap { userDto -> catch { realWorld { User(userDto.id) } } }
+        flatMap { user -> catch { realWorld { User(user.id) } } }
 
     fun Kind<F, UserDao>.toUserFromDatabase(): Kind<F, User> =
-        flatMap { userDao -> catch { realWorld { User(userDao.id) } } }
+        flatMap { user -> catch { realWorld { User(user.id) } } }
 }

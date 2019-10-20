@@ -1,41 +1,27 @@
 ext {
     versions = [
-            kotlin: '1.3.11',
-            arrow : '0.8.2',
+            kotlin    : '1.3.50',
+            coroutines: '1.3.2',
+            arrow     : '0.10.0',
+
+            /* Test */
+            junit     : '4.12',
     ]
 
     deps = [
-            kotlin: [
+            kotlin    : [
                     stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
             ],
-            arrow : [
-                    core                              : "io.arrow-kt:arrow-core:$versions.arrow",
-                    coreInstances                     : "io.arrow-kt:arrow-instances-core:$versions.arrow",
-                    coreData                          : "io.arrow-kt:arrow-core-data:$versions.arrow",
-                    coreExtensions                    : "io.arrow-kt:arrow-core-extensions:$versions.arrow",
-                    syntax                            : "io.arrow-kt:arrow-syntax:$versions.arrow",
-                    typeclasses                       : "io.arrow-kt:arrow-typeclasses:$versions.arrow",
-                    extras                            : "io.arrow-kt:arrow-extras:$versions.arrow",
-                    extrasExtensions                  : "io.arrow-kt:arrow-extras-extensions:$versions.arrow",
-                    meta                              : "io.arrow-kt:arrow-meta:$versions.arrow",
+            coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines",
+            arrow     : [
+                    core  : "io.arrow-kt:arrow-core:$versions.arrow",
+                    syntax: "io.arrow-kt:arrow-syntax:$versions.arrow",
+                    meta  : "io.arrow-kt:arrow-meta:$versions.arrow",
+                    optics: "io.arrow-kt:arrow-optics:$versions.arrow",
+                    fx    : "io.arrow-kt:arrow-fx:$versions.arrow",
+            ],
 
-                    free                              : "io.arrow-kt:arrow-free:$versions.arrow",
-                    freeExtensions                    : "io.arrow-kt:arrow-free-extensions:$versions.arrow",
-                    mtl                               : "io.arrow-kt:arrow-mtl:$versions.arrow",
-                    effects                           : "io.arrow-kt:arrow-effects:$versions.arrow",
-                    effectsExtensions                 : "io.arrow-kt:arrow-effects-extensions:$versions.arrow",
-                    effectsRx2                        : "io.arrow-kt:arrow-effects-rx2:$versions.arrow",
-                    effectsRx2Extensions              : "io.arrow-kt:arrow-effects-rx2-extensions:$versions.arrow",
-                    effectsReactor                    : "io.arrow-kt:arrow-effects-reactor:$versions.arrow",
-                    effectsReactorExtensions          : "io.arrow-kt:arrow-effects-reactor-extensions:$versions.arrow",
-                    effectsKotlinxCoroutines          : "io.arrow-kt:arrow-effects-kotlinx-coroutines:$versions.arrow",
-                    effectsKotlinxCoroutinesInstances: "io.arrow-kt:arrow-effects-kotlinx-coroutines-instances:$versions.arrow",
-                    effectsKotlinxCoroutinesExtensions: "io.arrow-kt:arrow-effects-kotlinx-coroutines-extensions:$versions.arrow",
-                    optics                            : "io.arrow-kt:arrow-optics:$versions.arrow",
-                    generic                           : "io.arrow-kt:arrow-generic:$versions.arrow",
-                    recursion                         : "io.arrow-kt:arrow-recursion:$versions.arrow",
-                    extensionsRecursion               : "io.arrow-kt:arrow-extensions-recursion:$versions.arrow",
-                    integrationRetrofitAdapter        : "io.arrow-kt:arrow-integration-retrofit-adapter:$versions.arrow",
-            ]
+            /* Test */
+            junit     : "junit:junit:$versions.junit",
     ]
 }

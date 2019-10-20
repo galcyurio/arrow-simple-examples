@@ -2,7 +2,9 @@ package com.github.galcyurio
 
 import arrow.Kind
 import arrow.core.Try
-import arrow.typeclasses.Applicative
+import arrow.core.left
+import arrow.core.right
+import arrow.effects.typeclasses.Async
 import arrow.typeclasses.ApplicativeError
 import arrow.typeclasses.basics.*
 
@@ -23,30 +25,11 @@ interface DaoOperations {
         Try { dao.query("SELECT * FROM companies WHERE companyId = $this") }
 }
 
-interface NetworkOperationsUnsafe<F> : Applicative<F> {
-    val network: NetworkModule
-
-    fun Index.requestUser(): Kind<F, UserDto> =
-        just(network.fetch(this, mapOf("1" to "2")))
-}
-
-interface DaoOperationsUnsave<F> : Applicative<F> {
-    val dao: DaoDatabase
-
-    fun Index.queryUser(): Kind<F, UserDao> =
-        just(dao.query("SELECT * FROM users WHERE userId = $this"))
-}
-
 interface NetworkOperationsSync<F> : ApplicativeError<F, Throwable> {
     val network: NetworkModule
 
     fun Index.requestUser(): Kind<F, UserDto> =
         catch { network.fetch(this, mapOf("1" to "2")) }
-//        try {
-//            just(network.fetch(this, mapOf("1" to "2")))
-//        } catch (e: Throwable) {
-//            raiseError(e)
-//        }
 }
 
 interface DaoOperationsSync<F> : ApplicativeError<F, Throwable> {
