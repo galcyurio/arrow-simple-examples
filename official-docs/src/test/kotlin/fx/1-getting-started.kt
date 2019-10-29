@@ -2,6 +2,9 @@ package fx
 
 import arrow.fx.IO
 import arrow.fx.extensions.fx
+import arrow.fx.extensions.io.unsafeRun.runBlocking
+import arrow.fx.typeclasses.UnsafeRun
+import arrow.unsafe
 import org.junit.Test
 
 /**
@@ -187,5 +190,37 @@ class GettingStarted {
 
         println("===== Nothing happens before unsafeRunAsync() =====")
         io.unsafeRunAsync { println(it) }
+    }
+
+    /**
+     * ## Executing effectful programs
+     *
+     * 사용자가 실행 전략을 blocking, non-blocking 둘 중 어느것으로 하든 `greet()` 함수는 준비되었습니다.
+     * `blocking` 실행 전략은 프로그램이 값을 산출(yield)하기를 기다리며 현재 스레드를 차단하는 반면
+     * non-blocking 실행 전략은 현재 스레드를 차단하지 않고 즉시 반환하고 프로그램의 작업을 수행합니다.
+     *
+     * blocking 그리고 non-blocking 방식 모두 side effect를 수행하기 때문에 실행되는 effect를 `unsafe` 작업으로 간주합니다.
+     *
+     * Arrow는 [UnsafeRun] 타입 클래스의 확장으로 프로그램을 실행하는 기능을 제한합니다.
+     *
+     * `unsafe` 사용은 전역적으로 예약되어 있으며 well-typed functional 프로그램을 실행하는
+     * 아마도 유일하지만 불완전한 방법일 수 있습니다.
+     */
+    @Test
+    fun `Executing effectful programs`() {
+        suspend fun sayHello(): Unit = println("Hello World")
+        suspend fun sayGoodBye(): Unit = println("Good bye World!")
+        fun greet(): IO<Unit> = IO.fx {
+            !effect { sayHello() }
+            !effect { sayGoodBye() }
+        }
+
+//        fun main() { // The edge of our world
+//            unsafe { runBlocking { greet() } }
+//        }
+//        NOTE: 공식문서의 코드는 위와 같으나 테스트 코드이기 때문에 main() 함수를 생략하고 아래와 같이 작성한다.
+        
+//        NOTE: 코루틴의 runBlocking 아님
+        unsafe { runBlocking { greet() } }
     }
 }
