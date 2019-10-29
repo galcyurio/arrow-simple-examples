@@ -1,5 +1,7 @@
 package fx
 
+import arrow.fx.IO
+import arrow.fx.extensions.fx
 import org.junit.Test
 
 /**
@@ -60,7 +62,7 @@ class GettingStarted {
      * 통제되지 않은 side effect를 적용하지 않도록 합니다.
      */
     @Test
-    fun `Side effect`()  {
+    fun `Side effect`() {
         fun helloWorld(): String = "Hello World"
         suspend fun sayHello(): Unit = println(helloWorld())
         // sayHello() // 주석제거하면 에러!
@@ -86,4 +88,104 @@ class GettingStarted {
      * 제거할 수 있었는지 궁금하다면 계속해서 이 글을 읽으세요.
      */
     fun dummy2() {}
+
+    /**
+     * ### suspend composition
+     * 다른 일시 중단된(suspended) side effect가 있는 경우 일시 중단된 side effect를 applying 하고 composing 할 수 있습니다.
+     * 아래 예제에서 `sayHello`와 `sayGoodBye`는 모두 suspend function 이기 때문에 `greet` 내에서 사용할 수 있습니다.
+     */
+    @Test
+    fun `suspend composition`() {
+        suspend fun sayGoodBye(): Unit = println("Good bye World!")
+        suspend fun sayHello(): Unit = println("Hello World")
+        suspend fun greet() {
+            sayHello() // this is ok because
+            sayGoodBye() // `greet` is also `suspend`
+        }
+    }
+
+    /**
+     * ### fx composition
+     * side effect는 `fx` 블록에서 구성(compose)하여 순수한 값으로 바뀔 수 있습니다.
+     */
+    fun dummy3() {}
+
+    /**
+     * ### effect를 활용하여 side effect를 순수한 값으로 바꾸기
+     *
+     * `effect`는 effect를 감싸서 `suspend () -> A`와 같은 유저가 정의한 side effect를
+     * `IO<A>` 값으로 변경하여 순수한 값으로 바꾸어 줍니다.
+     *
+     * `effect`를 이용해서 suspended side effect를 [IO] 값으로 잡아두면 effect를 적용할
+     * 준비가 될 때까지 어느 곳이든 넘겨주거나 구성(compose)할 수 있습니다.
+     * 이 시점에서 `greet`와 `effect`는 지연된 값이므로 아무 일도 벌어지지 않습니다.
+     */
+    @Test
+    fun `Turning side effects into pure values with effect`() {
+        suspend fun sayHello(): Unit = println("Hello World")
+        suspend fun sayGoodBye(): Unit = println("Good bye World!")
+        fun greet(): IO<Unit> = IO.fx {
+            val pureHello = effect { sayHello() }
+            val pureGoodBye = effect { sayGoodBye() }
+        }
+    }
+
+    /**
+     * ### !effect를 이용해 side effect 적용하기
+     *
+     * `!` 연산자를 이용해 side effect를 적용할 수 있습니다.
+     * `effect`를 이용해 side effect를 순수하게 만들었다면 non-blocking 방식으로 값을 꺼내올 수 있습니다.
+     * `!effect`는 suspended side effect를 가져와 continuation context가 실행되기 전에 이를 제어하도록 만듭니다.
+     * 이는 effect composition이 순수하고 참조적으로 투명하며 끝(edge)에서만 실행되도록 합니다.
+     *
+     * 이전 예제에서 `greet()` 함수를 실행하는 것은 래핑된 지연된 값이 반환되므로 아무런 영향을 끼치지 않습니다.
+     * 이 함수를 호출해도 효과(effect)가 발생하지 않기 때문에 우리는 `greet` 함수가 effects application을
+     * 참조하였더라도 순수하고 참조적으로 투명하다는 것을 확신할 수 있습니다.
+     */
+    @Test
+    fun `Applying side effects with !effect`() {
+        suspend fun sayHello(): Unit = println("Hello World")
+        suspend fun sayGoodBye(): Unit = println("Good bye World!")
+        fun greet(): IO<Unit> = IO.fx {
+            !effect { sayHello() }
+            !effect { sayGoodBye() }
+        }
+
+        val io = greet()
+
+        println("===== Nothing happens before unsafeRunAsync() =====")
+        io.unsafeRunAsync { println(it) }
+    }
+
+    /**
+     * `effect` 또는 `!effect`로 구분되지 않은 `fx` 블록에서 side effect를 실행하려고 하면 컴파일 오류가 발생합니다.
+     * Arrow는 명시적으로 effect를 적용하도록 사용법을 강제합니다.
+     */
+    fun dummy4() {
+        suspend fun sayHello(): Unit = println("Hello World")
+        suspend fun sayGoodBye(): Unit = println("Good bye World!")
+        fun greet(): IO<Unit> = IO.fx {
+            // sayHello() // 주석 풀면 에러!
+            // sayGoodBye()
+        }
+    }
+
+    /**
+     * ### 기존에 존재하는 데이터 타입들에 적용하기
+     *
+     * [IO]와 같은 일반 데이터 유형을 사용하는 composition은 `effect` 블록과 같은 방식으로 `fx` 블록을 통해 가능합니다.
+     * 게다가 이전에 `!`를 이용해 사용했던 확장 함수인 `bind()` 또한 사용할 수 있습니다.
+     */
+    @Test
+    fun `Applying existing datatypes`() {
+        fun sayInIO(s: String): IO<Unit> = IO { println(s) }
+        fun greet(): IO<Unit> = IO.fx {
+            sayInIO("Hello World").bind()
+        }
+
+        val io = greet()
+
+        println("===== Nothing happens before unsafeRunAsync() =====")
+        io.unsafeRunAsync { println(it) }
+    }
 }
